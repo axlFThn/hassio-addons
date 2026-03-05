@@ -1,6 +1,6 @@
 build_from:
-  aarch64: ghcr.io/home-assistant/aarch64-addon-base:latest
-  amd64: ghcr.io/home-assistant/amd64-addon-base:latest
+  aarch64: ghcr.io/home-assistant/aarch64-addon-base:3.2
+  amd64: ghcr.io/home-assistant/amd64-addon-base:3.2
 labels:
   org.opencontainers.image.title: "Home Assistant OpenCloud"
   org.opencontainers.image.description: "OpenCloud - Open source file management and collaboration"
