@@ -1,19 +1,27 @@
 ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
-# Install OpenCloud
+# Install dependencies
 RUN apk add --no-cache \
     ca-certificates \
     bash \
-    s6
+    s6 \
+    curl
 
-# Copy OpenCloud application
+# Create opencloud user
+RUN addgroup -g 1000 opencloud && \
+    adduser -D -u 1000 -G opencloud opencloud
+
+# Create directories
+RUN mkdir -p /config /data && \
+    chown -R opencloud:opencloud /config /data
+
+# Copy scripts
 COPY rootfs / 
 
-# Copy startup script
-COPY run.sh /
+# Set permissions
+RUN chmod +x /etc/s6-overlay/s6-rc.d/*/run || true
+RUN chmod +x /etc/services.d/*/run || true
 
-RUN chmod +x /run.sh
-
+# Use s6-overlay for process supervision
 ENTRYPOINT [ "/init" ]
-CMD []
