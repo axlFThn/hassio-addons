@@ -6,11 +6,8 @@ image: ghcr.io/axlFThn/hassio-opencloud-{arch}
 arch:
   - amd64
   - arm64
-startup: services
+startup: application
 boot: auto
-services:
-  - name: opencloud
-    main: true
 ports:
   9200/tcp: 9200
 options:
@@ -22,7 +19,7 @@ schema:
   initial_admin_password: str
   domain: str
 environment:
-  - LOG_LEVEL=info
+  LOG_LEVEL: info
 privileged: []
 volumes:
   data: {}
