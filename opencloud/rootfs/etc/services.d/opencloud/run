@@ -1,0 +1,30 @@
+#!/usr/bin/with-contenv bash
+# shellcheck disable=SC1091
+
+set -e
+
+# Load bashio functions
+source /usr/lib/bashio/bashio.sh
+
+# Get configuration
+LOG_LEVEL=$(bashio::config 'log_level')
+ADMIN_PASSWORD=$(bashio::config 'initial_admin_password')
+DOMAIN=$(bashio::config 'domain')
+
+# Prepare environment
+export OC_LOG_LEVEL="${LOG_LEVEL}"
+export OC_URL="${DOMAIN}"
+export OC_LOG_COLOR="false"
+export OC_LOG_PRETTY="false"
+export PROXY_HTTP_ADDR="0.0.0.0:9200"
+export PROXY_TLS="false"
+export IDM_ADMIN_PASSWORD="${ADMIN_PASSWORD}"
+export STORAGE_USERS_DRIVER="decomposed"
+export STORAGE_SYSTEM_DRIVER="decomposed"
+
+# Initialize if needed
+cd /config/opencloud-config
+/opencloud/opencloud init || true
+
+# Start OpenCloud server
+exec /opencloud/opencloud serve
