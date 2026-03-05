@@ -6,20 +6,4 @@ image: ghcr.io/axlFThn/opencloud-{arch}
 arch:
   - amd64
   - aarch64
-startup: application
-boot: auto
-ports:
-  9200/tcp: 9200
-options:
-  log_level: info
-  initial_admin_password: changeme
-  domain: http://localhost:9200
-schema:
-  log_level: list(debug|info|notice|warning|error|critical)?
-  initial_admin_password: str
-  domain: str
-environment:
-  LOG_LEVEL: info
-privileged: []
-volumes:
-  data: {}
+url: https://github.com/axlFThn/hassio-addons/tree/main/opencloud
