@@ -2,10 +2,10 @@ name: OpenCloud
 description: OpenCloud - Open source file management and collaboration platform
 version: 1.0.0
 slug: opencloud
-image: ghcr.io/axlFThn/hassio-opencloud-{arch}-addon
+image: ghcr.io/axlFThn/{arch}-addon-opencloud
 arch:
   - amd64
-  - arm64
+  - aarch64
 startup: application
 boot: auto
 ports:
