@@ -2,11 +2,9 @@ name: OpenCloud
 description: OpenCloud - Open source file management and collaboration platform
 version: 1.0.0
 slug: opencloud
-image: ghcr.io/{your-username}/hassio-opencloud-{arch}
+image: ghcr.io/axlFThn/hassio-opencloud-{arch}
 arch:
   - amd64
-  - armhf
-  - armv7
   - arm64
 startup: services
 boot: auto
@@ -14,15 +12,17 @@ services:
   - name: opencloud
     main: true
 ports:
-  8080/tcp: 8080
+  9200/tcp: 9200
 options:
   log_level: info
-  admin_user: admin
-  admin_password: changeme
+  initial_admin_password: changeme
+  domain: http://localhost:9200
 schema:
   log_level: list(debug|info|notice|warning|error|critical)?
-  admin_user: str
-  admin_password: str
+  initial_admin_password: str
+  domain: str
 environment:
   - LOG_LEVEL=info
 privileged: []
+volumes:
+  data: {}
