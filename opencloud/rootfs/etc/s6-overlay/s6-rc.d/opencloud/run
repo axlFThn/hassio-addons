@@ -1,5 +1,0 @@
-#!/usr/bin/execlineb -P
-# Run opencloud service
-exec -c
-  s6-notifyoneof -d 3 "READY=1" "STOPPING=1"
-  exec su-exec opencloud /opencloud/opencloud serve
