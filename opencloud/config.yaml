@@ -1,25 +1,63 @@
 name: OpenCloud
 description: OpenCloud - Open source file management and collaboration platform
-version: 1.0.2
+version: 5.1.0
 slug: opencloud
-url: https://github.com/axlFThn/hassio-addons
+url: https://opencloud.eu
+webui: "http://[HOST]:[PORT:9200]"
 arch:
   - amd64
   - aarch64
+init: false
+hassio_api: true
 startup: application
 boot: auto
-ports:
-  9200/tcp: 9200
-options:
-  log_level: info
-  initial_admin_password: changeme
-  domain: http://localhost:9200
+map:
+  - type: addon_config
+    read_only: false
+  - type: share
+    read_only: false
+  - type: media
+    read_only: false
+backup: cold
+backup_exclude:
+  - "**/logs"
+tmpfs: true
+video: true
+usb: true
+udev: true
+privileged:
+  - SYS_ADMIN
+  - DAC_READ_SEARCH
 schema:
-  log_level: list(debug|info|notice|warning|error|critical)?
-  initial_admin_password: str
-  domain: str
-environment:
-  LOG_LEVEL: info
-privileged: []
-volumes:
-  data: {}
+  OC_LOG_LEVEL: list(panic|fatal|error|warn|info|debug|trace)
+  OC_URL: str
+  OC_BASE_DATA_PATH: str
+  storage_mounts:
+    - path: str
+      type: list(local|smb|cifs|nfs)
+      mount: str
+      options: str?
+      auto_format: bool?
+      erase: bool?
+      username: str?
+      password: password?
+  TZ: str?
+  OC_DEFAULT_LANGUAGE: str
+  OC_SHARING_PUBLIC_SHARE_MUST_HAVE_PASSWORD: bool
+  OC_SHARING_PUBLIC_WRITEABLE_SHARE_MUST_HAVE_PASSWORD: bool
+  env_vars:
+    - key: match(^[A-Za-z0-9_-]+$)
+      value: str
+ports:
+  8080/tcp: 9200
+ports_description:
+  8080/tcp: OpenCloud UI
+options:
+  OC_LOG_LEVEL: warn
+  OC_BASE_DATA_PATH: /share/opencloud
+  OC_DEFAULT_LANGUAGE: en
+  OC_SHARING_PUBLIC_SHARE_MUST_HAVE_PASSWORD: true
+  OC_SHARING_PUBLIC_WRITEABLE_SHARE_MUST_HAVE_PASSWORD: true
+  storage_mounts: []
+  TZ: Etc/UTC
+  env_vars: []
